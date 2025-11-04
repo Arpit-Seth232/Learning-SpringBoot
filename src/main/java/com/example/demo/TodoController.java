@@ -18,6 +18,7 @@ public class TodoController {
     }
 
     @GetMapping("")
+    @TimeMonitor
     public ResponseEntity<List<Todo>> getTodos(){
         return ResponseEntity.ok(TodoList);
     }
