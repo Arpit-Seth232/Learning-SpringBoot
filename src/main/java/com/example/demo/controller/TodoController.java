@@ -1,6 +1,10 @@
-package com.example.demo;
+package com.example.demo.controller;
 import java.util.*;
 
+import com.example.demo.NotFoundResponseObject;
+import com.example.demo.TimeMonitor;
+import com.example.demo.model.Todo;
+import com.example.demo.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,18 +13,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/todos")
 public class TodoController {
 
-    public List<Todo>TodoList;
+//    public List<Todo>TodoList;
 
-    public TodoController() {
-        TodoList = new ArrayList<Todo>();
-        TodoList.add(new Todo(1, "dsa", false, 1));
-        TodoList.add(new Todo(2, "web", false, 2));
+//    public TodoController() {
+//        TodoList = new ArrayList<Todo>();
+//        TodoList.add(new Todo(1, "dsa", false, 1));
+//        TodoList.add(new Todo(2, "web", false, 2));
+//    }
+
+
+    public final TodoService service;
+
+    public TodoController(TodoService service){
+        this.service = service;
     }
 
+
     @GetMapping("")
-    @TimeMonitor
+//    @TimeMonitor
     public ResponseEntity<List<Todo>> getTodos(){
-        return ResponseEntity.ok(TodoList);
+        return ResponseEntity.ok(service.getAll());
     }
 
     @PostMapping("")
@@ -38,7 +50,7 @@ public class TodoController {
         }
         NotFoundResponseObject notFound = new NotFoundResponseObject();
         notFound.setId(todoId);
-        notFound.setMessage("todo with id" + todoId + " !!! NOT FOUND !!!");
+        notFound.setMessage("todo with id " + todoId + " !!! NOT FOUND !!!");
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
     }
 
@@ -58,7 +70,7 @@ public class TodoController {
         else{
             NotFoundResponseObject notFound = new NotFoundResponseObject();
             notFound.setId(todoId);
-            notFound.setMessage("todo with id" + todoId + " !!! NOT FOUND !!!");
+            notFound.setMessage("todo with id " + todoId + " !!! NOT FOUND !!!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
         }
 
@@ -85,7 +97,7 @@ public class TodoController {
             long id = updatedTodo.getId();
             NotFoundResponseObject notFound = new NotFoundResponseObject();
             notFound.setId(id);
-            notFound.setMessage("todo with id" + id + " !!! NOT FOUND !!!");
+            notFound.setMessage("todo with id " + id + " !!! NOT FOUND !!!");
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
         }
 

@@ -1,9 +1,21 @@
-package com.example.demo;
+package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "todos")
 public class Todo {
+	@Id
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private int id;
+
+	@Column(columnDefinition = "boolean default false")
 	private boolean completed;
+
+	@Column(nullable = false, unique = true, length = 100)
 	private String title;
+
+	@Column(nullable = false, unique = true)
 	private int userId;
 
 	public Todo(int id,String title, boolean completed, int userId){
@@ -11,6 +23,10 @@ public class Todo {
 		this.completed = completed;
 		this.userId = userId;
 		this.title = title;
+	}
+
+	public Todo(){
+
 	}
 
 	public void setId(int id){
