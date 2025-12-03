@@ -17,14 +17,28 @@ public class TodoService {
 
     public List<Todo> getAll() {
         return repo.findAll();
+
+    }
+
+    public Optional<Todo> getTodoByID(int Id){
+        return repo.findById(Id);
     }
 
     public Todo add(Todo todo) {
+
         return repo.save(todo);
     }
 
-    public void delete(int id) {
-        repo.deleteById(id);
+    public String delete(int id) {
+        if(repo.existsById(id)){
+            repo.deleteById(id);
+            return "deleted";
+        }
+        else{
+            return "not found";
+        }
     }
+
+
 
 }

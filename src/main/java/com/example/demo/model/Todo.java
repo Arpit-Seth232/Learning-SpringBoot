@@ -1,6 +1,12 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "todos")
@@ -12,18 +18,22 @@ public class Todo {
 	@Column(columnDefinition = "boolean default false")
 	private boolean completed;
 
-	@Column(nullable = false, unique = true, length = 100)
+	@Column(nullable = false, length = 100)
 	private String title;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private int userId;
 
-	public Todo(int id,String title, boolean completed, int userId){
-		this.id = id;
-		this.completed = completed;
-		this.userId = userId;
-		this.title = title;
-	}
+
+	@CreationTimestamp
+	@Column(name = "created_at",updatable = false)
+	private LocalDateTime createdAt;
+
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+
 
 	public Todo(){
 
@@ -61,6 +71,22 @@ public class Todo {
 		return userId;
 	}
 
+	public void setCreatedAt(LocalDateTime createdAt){
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getCreatedAt(){
+		return this.createdAt ;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt){
+		this.updatedAt = updatedAt;
+	}
+
+	public LocalDateTime getUpdatedAt(){
+		return this.updatedAt ;
+	}
+
 	@Override
  	public String toString(){
 		return 
@@ -68,7 +94,9 @@ public class Todo {
 			"id = '" + id + '\'' + 
 			",completed = '" + completed + '\'' + 
 			",title = '" + title + '\'' + 
-			",userId = '" + userId + '\'' + 
+			",userId = '" + userId + '\'' +
+			",created_at = '" + createdAt + '\''+
+					",updated_at = '" + updatedAt + '\''+
 			"}";
 		}
 }

@@ -1,14 +1,14 @@
 package com.example.demo;
 
-public class NotFoundResponseObject{
-	private Long id;
+public class NotFoundResponse {
+	private int id;
 	private String message;
 
-	public void setId(Long id){
+	public void setId(int id){
 		this.id = id;
 	}
 
-	public Long getId(){
+	public int getId(){
 		return id;
 	}
 
